@@ -19,7 +19,6 @@ import java.util.List;
 
 public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdapter.EventViewHolder>{
     private List<Event> mEvents;
-    private static final String TAG = "EventRecyclerAdapter";
 
     public EventRecyclerAdapter(List<Event> events) {
         mEvents = events;
@@ -41,12 +40,10 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
             @Override
             public boolean onLongClick(View view) {
                 long id = mEvents.get(holder.getAdapterPosition()).getId();
-                Log.d(TAG, "onLongClick: "+id);
                 Uri uriWithId = ContentUris.withAppendedId(CalendarContract.Events.CONTENT_URI, id);
-                int rows = view.getContext().getContentResolver().delete(
+                view.getContext().getContentResolver().delete(
                         uriWithId,
                         null, null);
-                Log.d(TAG, "onLongClick: "+rows);
                 return false;
             }
         });
@@ -58,7 +55,6 @@ public class EventRecyclerAdapter extends RecyclerView.Adapter<EventRecyclerAdap
     }
 
     public void swapData(Cursor cursor){
-        Log.d(TAG, "swapData: ");
         mEvents.clear();
 
         if(cursor != null && cursor.moveToFirst()){
